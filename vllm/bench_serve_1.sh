@@ -1,0 +1,11 @@
+vllm bench serve \
+    --dataset-name random \
+    --model "Qwen/Qwen3-8B-AWQ" \
+    --tokenizer "Qwen/Qwen3-8B-AWQ" \
+    --num-prompts "1" \
+    --random-input-len "3072" \
+    --random-output-len "64" \
+    --trust-remote-code \
+    --ignore-eos \
+    --host 127.0.0.1 \
+    --port 8001 
