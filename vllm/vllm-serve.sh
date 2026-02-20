@@ -9,6 +9,33 @@ export MODELSCOPE_CACHE=/root/shared-nvme/cache/
 export VLLM_USE_MODELSCOPE=True
 export HF_ENDPOINT=https://hf-mirror.com
 
+vllm serve "/root/shared-nvme/cache/models/Qwen/Qwen3-14B"  \
+  --host 0.0.0.0  --port 8001  --served-model-name Qwen3-14B  \
+  --tensor-parallel-size 2  --dtype float16 \
+  --max-model-len 40960  \
+  --gpu-memory-utilization 0.92  \
+  --max_num_seqs 8  \
+  --trust-remote-code   \
+  --enable-auto-tool-choice  --tool-call-parse hermes
+
+vllm serve "/root/shared-nvme/cache/models/Qwen/Qwen3-14B-AWQ"  \
+  --host 0.0.0.0  --port 8001  --served-model-name Qwen3-14B-AWQ  \
+  --tensor-parallel-size 2  --dtype float16  -q awq_marlin  \
+  --max-model-len 40960  \
+  --gpu-memory-utilization 0.92  \
+  --max_num_seqs 8  \
+  --trust-remote-code   \
+  --enable-auto-tool-choice  --tool-call-parse hermes
+
+vllm serve "/root/shared-nvme/cache/models/Qwen/Qwen3-8B"  \
+  --host 0.0.0.0  --port 8001  --served-model-name Qwen3-8B  \
+  --tensor-parallel-size 2  --dtype float16 \
+  --max-model-len 40960  \
+  --gpu-memory-utilization 0.92  \
+  --max_num_seqs 8  \
+  --trust-remote-code   \
+  --enable-auto-tool-choice  --tool-call-parse hermes
+
 vllm serve "/root/shared-nvme/cache/models/Qwen/Qwen3-8B-AWQ"  \
   --host 0.0.0.0  --port 8001  --served-model-name Qwen3-8B-AWQ  \
   --tensor-parallel-size 2  --dtype float16  -q awq_marlin \
@@ -18,17 +45,6 @@ vllm serve "/root/shared-nvme/cache/models/Qwen/Qwen3-8B-AWQ"  \
   --trust-remote-code   \
   --enable-auto-tool-choice  --tool-call-parse hermes
 
-vllm serve Qwen/Qwen3-8B-AWQ  \
-  --host 0.0.0.0  --port 8001  --served-model-name Qwen3-8B-AWQ  \
-  --tensor-parallel-size 2  --dtype float16  -q awq_marlin \
-  --max-model-len 40960  \
-  --gpu-memory-utilization 0.92  \
-  --max_num_seqs 8  \
-  --trust-remote-code   \
-  --enable-auto-tool-choice  --tool-call-parse hermes
-
-
-##  --compilation-config '{"full_cuda_graph": true}' 
 
 curl http://127.0.0.1:8001/v1/models
 curl http://127.0.0.1:8001/metrics
@@ -45,20 +61,42 @@ curl http://127.0.0.1:8001/v1/chat/completions \
 
 
 
+
+
+
+# bench 4
 vllm serve "/root/shared-nvme/cache/models/Qwen/Qwen3-14B"  \
   --host 0.0.0.0  --port 8001  --served-model-name Qwen3-14B  \
-  --tensor-parallel-size 2  --dtype float16 \
+  --tensor-parallel-size 4  --dtype float16 \
   --max-model-len 40960  \
   --gpu-memory-utilization 0.92  \
-  --max_num_seqs 8  \
+  --max_num_seqs 32  \
   --trust-remote-code   \
   --enable-auto-tool-choice  --tool-call-parse hermes
 
 vllm serve "/root/shared-nvme/cache/models/Qwen/Qwen3-14B-AWQ"  \
   --host 0.0.0.0  --port 8001  --served-model-name Qwen3-14B-AWQ  \
-  --tensor-parallel-size 2  --dtype float16  -q awq_marlin  \
+  --tensor-parallel-size 4  --dtype float16  -q awq_marlin \
   --max-model-len 40960  \
   --gpu-memory-utilization 0.92  \
-  --max_num_seqs 8  \
+  --max_num_seqs 32  \
+  --trust-remote-code   \
+  --enable-auto-tool-choice  --tool-call-parse hermes
+
+vllm serve "/root/shared-nvme/cache/models/Qwen/Qwen3-8B"  \
+  --host 0.0.0.0  --port 8001  --served-model-name Qwen3-8B  \
+  --tensor-parallel-size 4  --dtype float16 \
+  --max-model-len 40960  \
+  --gpu-memory-utilization 0.92  \
+  --max_num_seqs 32  \
+  --trust-remote-code   \
+  --enable-auto-tool-choice  --tool-call-parse hermes
+
+vllm serve "/root/shared-nvme/cache/models/Qwen/Qwen3-8B-AWQ"  \
+  --host 0.0.0.0  --port 8001  --served-model-name Qwen3-8B-AWQ  \
+  --tensor-parallel-size 4  --dtype float16  -q awq_marlin \
+  --max-model-len 40960  \
+  --gpu-memory-utilization 0.92  \
+  --max_num_seqs 32  \
   --trust-remote-code   \
   --enable-auto-tool-choice  --tool-call-parse hermes
