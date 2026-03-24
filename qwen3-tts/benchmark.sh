@@ -5,13 +5,13 @@ apt update
 apt install ffmpeg
 
 ## 环境1 vllm-omni
-conda create -n omni python=3.12 -y
-conda activate omni
+conda create -n hongpai-omni python=3.12 -y
+conda activate hongpai-omni
 
 pip install --upgrade uv
 
 ### 安装pytorch
-uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+uv pip install torch==2.10.0 torchvision==0.25.0 torchaudio==2.10.0 --index-url https://download.pytorch.org/whl/cu128
 
 ### 安装vllm
 #### uv pip install vllm==0.17.0 --torch-backend=auto
@@ -29,12 +29,12 @@ uv pip install matplotlib aiohttp soundfile numpy tqdm
 conda deactivate
 
 ## 环境2 qwen3-tts
-conda create -n tts python=3.12 -y
-conda activate tts
+conda create -n hongpai-tts python=3.12 -y
+conda activate hongpai-tts
 pip install --upgrade uv
 
 ### 安装pytorch
-uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+uv pip install torch==2.10.0 torchvision==0.25.0 torchaudio==2.10.0 --index-url https://download.pytorch.org/whl/cu128
 
 
 ### 安装flash-attn
